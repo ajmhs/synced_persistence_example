@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/7.3.0/rti_persistence_service.xsd">
+
+    <persistence_service name="persistence_service_a">
+        <synchronization>
+            <synchronize_data>true</synchronize_data>
+        </synchronization>
+
+        <persistent_storage>
+            <filesystem>
+                <directory>/tmp</directory>
+                <file_prefix>ps_</file_prefix>
+            </filesystem>
+        </persistent_storage>
+
+        <participant name="ps_a">
+            <domain_id>12</domain_id>
+            
+            <domain_participant_qos>
+                <transport_builtin>
+                    <mask>UDPv4</mask>
+                </transport_builtin>
+                <discovery>
+                    <initial_peers>
+                        <element>udpv4://10.1.0.20</element>
+                    </initial_peers>
+                </discovery>
+            </domain_participant_qos>
+                    
+            <persistence_group name="all">                
+                <filter>*</filter>
+        
+                <datareader_qos>
+                    <destination_order>
+                        <kind>BY_SOURCE_TIMESTAMP_DESTINATIONORDER_QOS</kind>
+                        <scope>INSTANCE_SCOPE_DESTINATIONORDER_QOS</scope>
+                    </destination_order>
+                </datareader_qos>
+        
+                <datawriter_qos>
+                    <destination_order>
+                        <kind>BY_SOURCE_TIMESTAMP_DESTINATIONORDER_QOS</kind>
+                        <scope>INSTANCE_SCOPE_DESTINATIONORDER_QOS</scope>
+                    </destination_order>
+                </datawriter_qos>
+            </persistence_group>
+        
+        </participant>
+    </persistence_service>
+
+    <persistence_service name="persistence_service_b">
+        <synchronization>
+            <synchronize_data>true</synchronize_data>
+        </synchronization>
+        <persistent_storage>
+            <filesystem>
+                <directory>/tmp</directory>
+                <file_prefix>ps_</file_prefix>
+            </filesystem>
+        </persistent_storage>
+        <participant name="ps_b">
+            <domain_id>12</domain_id>            
+            <domain_participant_qos>
+                <transport_builtin>
+                    <mask>UDPv4</mask>
+                </transport_builtin>
+                <discovery>
+                    <initial_peers>                        
+                        <element>udpv4://10.1.0.20</element>
+                    </initial_peers>
+                </discovery>
+            </domain_participant_qos>
+
+            <persistence_group name="all">
+                <filter>*</filter>
+                <datareader_qos>
+                    <destination_order>
+                        <kind>DDS_BY_SOURCE_TIMESTAMP_DESTINATIONORDER_QOS</kind>
+                        <scope>DDS_INSTANCE_SCOPE_DESTINATIONORDER_QOS</scope>
+                    </destination_order>
+                </datareader_qos>
+                <datawriter_qos>
+                    <destination_order>
+                        <kind>BY_SOURCE_TIMESTAMP_DESTINATIONORDER_QOS</kind>
+                        <scope>INSTANCE_SCOPE_DESTINATIONORDER_QOS</scope>
+                    </destination_order>
+                </datawriter_qos>
+            </persistence_group>
+        </participant>
+    </persistence_service>
+    
+</dds>
