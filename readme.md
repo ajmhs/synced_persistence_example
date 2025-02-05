@@ -11,6 +11,8 @@ In addition to employing the Persistence Service, it is crucial to ensure that t
 
 When the scope is set to `DDS_INSTANCE_SCOPE_DESTINATIONORDER_QOS` (default), the sample's source timestamp determines the most recent information within each instance. This configuration ensures that, in cases where multiple DataWriters with the same strength update the same instance concurrently, all DataReaders receive a consistent final value. If a DataReader encounters a sample with an older source timestamp than the last received, the sample is discarded. The total number of dropped samples due to outdated timestamps can be monitored using the `old_source_timestamp_dropped_sample_count` field in `DATA_READER_CACHE_STATUS`. However, neither the `SAMPLE_REJECTED` nor `SAMPLE_LOST` status will be updated in such cases.
 
+When redundant containers handle timestamp-ordered data, clock synchronization is critical to ensure consistent sequencing across services. Misaligned clocks can lead to out-of-order data processing, causing inconsistencies or errors in time-sensitive applications. With this in mind, any production implementation should ensure that the system clocks are synchronised.
+
 ## Installation
 
 The RTI Persistence Service Docker image is available on Docker Hub at:
